@@ -1,0 +1,39 @@
+[root@kube01 ~]# yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+[root@kube01 ~]# yum update -y ; yum install -y yum-utils
+[root@kube01 ~]# sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+
+[root@kube01 ~]# cat > /etc/yum.repos.d/kubernetes.repo
+
+[kubernetes-repo]
+name=kubernetes repo
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+            https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+[root@kube01 ~]# yum install -y docker-ce docker-ce-cli containerd.io kubelet kubeadm kubectl wget screen elinks
+
+# disable firewalld
+[root@kube02 ~]# usermod -aG docker adm1user
+[root@kube02 ~]# usermod -aG docker root
+[root@kube01 ~]# systemctl disable firewalld
+[root@kube01 ~]# systemctl stop firewalld
+[root@kube01 ~]# iptables -F
+[root@kube01 ~]# iptables -L
+[root@kube01 ~]# vi /etc/sysctl.conf
+	net.bridge.bridge-nf-call-ip6tables = 1
+	net.bridge.bridge-nf-call-iptables = 1
+[root@kube01 ~]# modprobe br_netfilter
+[root@kube01 ~]# sysctl --system
+[root@kube01 ~]# vi /etc/hosts
+
+[root@kube01 ~]# swapoff -a
+[root@kube01 ~]# vi /etc/fstab
+
+[root@kube01 ~]# reboot
