@@ -1,3 +1,21 @@
+root@nuc10ve:~# qm config 202202181
+boot: order=scsi0;ide2;net0
+cores: 2
+ide2: none,media=cdrom
+memory: 3072
+name: kube01
+net0: virtio=12:56:20:BA:01:76,bridge=vmbr0
+net1: virtio=32:62:0B:9E:E7:5D,bridge=vmbr1
+numa: 0
+ostype: l26
+parent: Snap1
+scsi0: local-lvm:vm-202202181-disk-0,cache=writethrough,size=32G
+scsihw: virtio-scsi-pci
+smbios1: uuid=67566df0-8278-4d26-967f-9a8ca1ed70a4
+sockets: 1
+vmgenid: ec5ef4c4-dd28-4a0b-9b32-f29987e81a98
+
+
 [root@kube01 ~]# yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 [root@kube01 ~]# yum update -y ; yum install -y yum-utils
