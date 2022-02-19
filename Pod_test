@@ -1,0 +1,16 @@
+[adm1user@kube01 pods]$ cat > webserver.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webserver
+spec:
+  containers:
+  - name: web
+    image: nginx:alpine
+
+
+[adm1user@kube01 pods]$ kubectl create -f webserver.yaml
+
+[adm1user@kube01 pods]$ kubectl get pods -o wide
+NAME          READY   STATUS    RESTARTS   AGE   IP           NODE                  NOMINATED NODE   READINESS GATES
+webserver     1/1     Running   0          15m   10.244.2.2   kube03.local.domain   <none>           <none>
