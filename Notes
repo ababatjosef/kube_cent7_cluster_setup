@@ -1,0 +1,9 @@
+# nmcli connection add type ethernet con-name eth1 ifname eth1
+# nmcli con mod eth1 ipv4.address 10.0.123.165/24
+# nmcli con mod eth1 ipv4.method manual
+# nmcli con mod eth1 connection.autoconnect yes
+# nmcli con down eth1
+# nmcli con up eth1
+
+### reset to start over - 
+[root@kube01 ~]# kubeadm reset && rm -rf /etc/cni/net.d
