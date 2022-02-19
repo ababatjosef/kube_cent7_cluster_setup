@@ -1,1 +1,23 @@
+[root@kube01 ~]# vi /etc/docker/daemon.json
+
+	{
+	  "exec-opts": ["native.cgroupdriver=systemd"],
+	  "log-driver": "json-file",
+	  "log-opts": {
+	    "max-size": "100m"
+	  },
+	  "storage-driver": "overlay2"
+	}
+
+
+[root@kube01 ~]# kubeadm init --apiserver-advertise-address=<eth1_ip> --pod-network-cidr=<arbitrary_subnet/16>
+
+[root@kube01 ~]# kubeadm init --apiserver-advertise-address=10.0.123.157 --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all | tee > token
+
+[adm1user@kube01 ~]$ mkdir -p $HOME/.kube
+[adm1user@kube01 ~]$ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+[adm1user@kube01 ~]$ sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+[adm1user@kube01 ~]$ wget https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+[adm1user@kube01 ~]$ kubectl apply -f kube-flannel.yml
 
